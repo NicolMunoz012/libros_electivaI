@@ -1,0 +1,13 @@
+{% extends 'gestion/base.html' %}
+
+{% block title %}Editar Libro{% endblock %}
+
+{% block content %}
+    <h1 class="mb-4">Editar Libro</h1>
+    <form method="post" class="card p-4">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-success mt-3">Actualizar Libro</button>
+        <a href="{% url 'libro_list' %}" class="btn btn-secondary mt-2">Cancelar</a>
+    </form>
+{% endblock %}
