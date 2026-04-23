@@ -4,6 +4,10 @@ from django.urls import reverse_lazy
 from .models import Autor, Libro
 from .forms import AutorForm, LibroForm
 
+def inicio(request):
+    """Vista para la página de inicio"""
+    return render(request, 'inicio.html')
+
 class AutorListView(ListView):
     model = Autor
     template_name = 'gestion/autor_list.html'
