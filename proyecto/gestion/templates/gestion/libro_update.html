@@ -3,11 +3,53 @@
 {% block title %}Editar Libro{% endblock %}
 
 {% block content %}
-    <h1 class="mb-4">Editar Libro</h1>
-    <form method="post" class="card p-4">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-success mt-3">Actualizar Libro</button>
-        <a href="{% url 'libro_list' %}" class="btn btn-secondary mt-2">Cancelar</a>
-    </form>
+<div class="page-header">
+    <h1><i class="bi bi-journal-pen me-2" style="color:#38c9a0;"></i>Editar Libro</h1>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-lg-7">
+        <div class="card">
+            <div class="card-body p-4">
+                <form method="post">
+                    {% csrf_token %}
+                    {% for field in form %}
+                    <div class="mb-3">
+                        <label for="{{ field.id_for_label }}" class="form-label fw-semibold text-secondary" style="font-size:0.85rem; text-transform:uppercase; letter-spacing:0.5px;">
+                            {{ field.label }}
+                        </label>
+                        <div>
+                            {% if field.field.widget.input_type == 'textarea' %}
+                                <textarea name="{{ field.html_name }}" id="{{ field.id_for_label }}"
+                                    class="form-control {% if field.errors %}is-invalid{% endif %}"
+                                    rows="3">{{ field.value|default:'' }}</textarea>
+                            {% else %}
+                                <input type="{{ field.field.widget.input_type }}"
+                                    name="{{ field.html_name }}"
+                                    id="{{ field.id_for_label }}"
+                                    value="{{ field.value|default:'' }}"
+                                    class="form-control {% if field.errors %}is-invalid{% endif %}">
+                            {% endif %}
+                        </div>
+                        {% if field.errors %}
+                            <div class="invalid-feedback d-block">{{ field.errors|join:", " }}</div>
+                        {% endif %}
+                        {% if field.help_text %}
+                            <div class="form-text text-muted">{{ field.help_text }}</div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                    <div class="d-flex gap-2 mt-4">
+                        <button type="submit" class="btn btn-success px-4">
+                            <i class="bi bi-check-circle me-1"></i>Actualizar Libro
+                        </button>
+                        <a href="{% url 'libro_list' %}" class="btn btn-outline-secondary px-4">
+                            <i class="bi bi-x-circle me-1"></i>Cancelar
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

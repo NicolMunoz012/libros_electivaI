@@ -3,14 +3,35 @@
 {% block title %}Eliminar Autor{% endblock %}
 
 {% block content %}
-    <h1 class="mb-4">Eliminar Autor</h1>
-    <div class="alert alert-warning" role="alert">
-        <p>¿Estás seguro de que deseas eliminar al autor **{{ object.nombre }}**?</p>
-        <p>Esta acción no se puede deshacer.</p>
+<div class="page-header">
+    <h1><i class="bi bi-person-x-fill me-2" style="color:#e53e3e;"></i>Eliminar Autor</h1>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="card" style="border-left: 5px solid #fc8181;">
+            <div class="card-body p-4">
+                <div class="d-flex align-items-start gap-3 mb-4">
+                    <div style="background:#fdecea; border-radius:12px; padding:0.75rem; flex-shrink:0;">
+                        <i class="bi bi-exclamation-triangle-fill" style="font-size:1.5rem; color:#e53e3e;"></i>
+                    </div>
+                    <div>
+                        <p class="mb-1 fw-semibold" style="color:#2d3748;">¿Estás seguro de que deseas eliminar al autor?</p>
+                        <p class="mb-1" style="color:#4f8ef7; font-weight:700; font-size:1.05rem;">{{ object.nombre }}</p>
+                        <p class="mb-0 text-muted" style="font-size:0.9rem;">Esta acción no se puede deshacer.</p>
+                    </div>
+                </div>
+                <form method="post" class="d-flex gap-2">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger px-4">
+                        <i class="bi bi-trash-fill me-1"></i>Sí, eliminar
+                    </button>
+                    <a href="{% url 'autor_list' %}" class="btn btn-outline-secondary px-4">
+                        <i class="bi bi-arrow-left me-1"></i>Cancelar
+                    </a>
+                </form>
+            </div>
+        </div>
     </div>
-    <form method="post">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-danger">Sí, eliminar</button>
-        <a href="{% url 'autor_list' %}" class="btn btn-secondary">Cancelar</a>
-    </form>
+</div>
 {% endblock %}
